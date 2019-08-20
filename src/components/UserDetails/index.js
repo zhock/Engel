@@ -57,6 +57,7 @@ class UserDetails extends Component {
     try {
       const dataRepo = await getUserDetails(this.state.page, this.state.per_page);
       this.setState({ dataRepo, fullData: dataRepo });
+      console.log(dataRepo)
       this.arrayholder = dataRepo;
     } catch (error) {}
   }
@@ -85,7 +86,8 @@ class UserDetails extends Component {
     const newDataRepo = await getUserDetails(page+1,per_page);
     if (!isEmpty(newDataRepo)) {
       dataRepo = dataRepo.concat(newDataRepo)  
-      this.setState({ dataRepo, fullData: dataRepo, page: page + 1 });       
+      this.setState({ dataRepo, fullData: dataRepo, page: page + 1 });  
+      this.arrayholder = dataRepo;     
     }    
   }
   renderItem = ({ item }) => {

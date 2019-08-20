@@ -26,7 +26,7 @@ class RegisterForm extends Component {
             id: '23213',
             chosenDate: '15/06/2018',
             email: 'elberth13@gmail.com',
-            userGit: 'ian13456',
+            userGit: 'zhock',
             errors: {
                 fullName: false,
                 id: false,
