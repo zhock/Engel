@@ -21,6 +21,7 @@ import {
   Label
 } from 'native-base';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { getUserDetails } from '../../services/userDetails'
 const propsTypes = {
     navigation: PropTypes.shape({
@@ -45,16 +46,17 @@ class UserDetails extends Component {
     this.state = {
       dataRepo: {},
       fullData: {},
-      search: ''
+      search: '',
+      page: 1,
+      per_page: 5
     }
     this.arrayholder = [];
   }
 
   async componentDidMount() {
     try {
-      const dataRepo = await getUserDetails();
+      const dataRepo = await getUserDetails(this.state.page, this.state.per_page);
       this.setState({ dataRepo, fullData: dataRepo });
-      console.log(dataRepo)
       this.arrayholder = dataRepo;
     } catch (error) {}
   }
@@ -78,6 +80,14 @@ class UserDetails extends Component {
 
   };
 
+  async loadRepos(){
+    let {page, per_page, dataRepo} = this.state
+    const newDataRepo = await getUserDetails(page+1,per_page);
+    if (!isEmpty(newDataRepo)) {
+      dataRepo = dataRepo.concat(newDataRepo)  
+      this.setState({ dataRepo, fullData: dataRepo, page: page + 1 });       
+    }    
+  }
   renderItem = ({ item }) => {
     return (
       <ListItem thumbnail>
@@ -150,6 +160,8 @@ class UserDetails extends Component {
               <FlatList
                 keyExtractor={(item, index) => String(index)}
                 data={dataRepo}
+                onEndReached={() => this.loadRepos()}
+                onEndReachedThreshold={0.5}
                 renderItem={this.renderItem}
               />
             </List>

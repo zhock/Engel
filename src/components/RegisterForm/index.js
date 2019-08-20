@@ -22,11 +22,11 @@ class RegisterForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fullName: '',
-            id: '',
-            chosenDate: null,
-            email: '',
-            userGit: '',
+            fullName: 'Elberth',
+            id: '23213',
+            chosenDate: '15/06/2018',
+            email: 'elberth13@gmail.com',
+            userGit: 'ian13456',
             errors: {
                 fullName: false,
                 id: false,
